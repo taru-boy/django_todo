@@ -1,0 +1,23 @@
+body {
+    background-color: #f1f1f1;
+}
+
+.date {
+    width: 200px;
+}
+
+.add {
+    width: 100px;
+}
+
+.deadline {
+    width: 200px;
+}
+
+.edit {
+    width: 100px;
+}
+
+.delete {
+    width: 100px;
+}

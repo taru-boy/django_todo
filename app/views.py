@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.generic import View
 
+from .forms import TodoForm
 from .models import Todo
 
 # Create your views here.
@@ -9,5 +10,16 @@ from .models import Todo
 class IndexView(View):
     def get(self, request, *args, **kwargs):
         todo_data = Todo.objects.order_by("deadline")
+        form = TodoForm(request.POST or None)
 
-        return render(request, "app/index.html", {"todo_data": todo_data})
+        return render(request, "app/index.html", {"todo_data": todo_data, "form": form})
+
+    def post(self, request, *args, **kwargs):
+        form = TodoForm(request.POST or None)
+
+        if form.is_valid():
+            todo_data = Todo()
+            todo_data.title = form.cleaned_data["title"]
+            todo_data.deadline = form.cleaned_data["deadline"]
+            todo_data.save()
+        return redirect("index")
